@@ -1,0 +1,12 @@
+<!-- There are scripts -->
+<script src="js/vendors/jquery-3.2.1.min.js"></script>
+<script src="js/vendors/smooth-scroll.min.js"></script>
+<script src="js/vendors/svgxuse.min.js" defer></script>
+<script src="js/vendors/swiper-4.1.0.min.js"></script>
+<script src="js/vendors/jquery.selectric.min.js"></script>
+<script src="js/vendors/jquery.fancybox.min.js"></script>
+<script src="js/vendors/jquery.collapse.js"></script>
+<script src="js/vendors/bootstrap-slider.min.js"></script>
+<script src="js/vendors/datepicker.min.js"></script>
+<script src="js/vendors/datepicker.en.js"></script>
+<script src="js/app.js"></script>

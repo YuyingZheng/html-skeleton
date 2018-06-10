@@ -1,0 +1,16 @@
+<head>
+	<!-- required meta tags always come first -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maxiumum-scale=1,user-scalable=no,shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=dege">
+	<meta name="format-detection" content="telephone=no">
+	<title>@@title</title>
+	<!-- <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">ets/images/"> -->
+	<link rel="stylesheet" href="css/app.min.css">
+	<script>
+		// picture element HTML5 shiv
+		document.createElement('picture');
+	</script>
+	<script src="js/vendors/picturefill.min.js" async></script>
+</head>

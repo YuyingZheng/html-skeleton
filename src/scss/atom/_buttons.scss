@@ -1,0 +1,133 @@
+.btn{
+  /* @extend .base-title;*/
+  border: .01rem solid $c-lighter-gray-border;
+  border-radius: .04rem;
+  box-sizing: border-box;
+  color: $c-theme-secondary;
+  display: inline-block;
+  font-size: .13rem;
+  line-height: .24rem;
+  padding: .1rem .16rem;
+  text-align: center;
+  text-transform: uppercase;
+  &:focus,
+  &:hover{
+    outline: none;
+  	text-decoration: none;
+  }
+  &.text-ellipsis{
+    font-size: inherit;
+    .text{
+      font-size: .13rem;
+    }
+  }
+  &.no-gap{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  &.gap-medium{
+    padding-left: .3rem;
+    padding-right: .3rem;
+  }
+  .icon{
+    height: .2rem;
+    margin-bottom: .01rem;
+    margin-right: .08rem;
+    width: .2rem;
+  }
+  &--loading{
+    pointer-events: none !important;
+    position: relative;
+    &::before{
+      animation: loading-spin 1s linear infinite;
+      border: .04rem solid $c-white;
+      border-radius: 50%;
+      border-top: .04rem solid $c-theme-secondary;
+      box-sizing: border-box;
+      content: '';
+      display: block;
+      height: .26rem;
+      left: 50%;
+      margin-left: (-.13rem);
+      margin-top: (-.13rem);
+      position: absolute;
+      top: 50%;
+      width: .26rem;
+      z-index: 3;
+    }
+    &::after{
+      background-color: rgba(0,0,0,.4);
+      bottom: 0;
+      content: '';
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+  }
+  &--mini{
+    min-width: inherit !important;
+    padding-left: .1rem;
+    padding-right: .1rem;
+    .icon{
+      margin-right: 0;
+    }
+    .icon-add-cart{
+      margin-left: .03rem;
+    }
+  }
+  &--large{
+  	display: block;
+    width: 100%;
+  }
+  &--white{
+  	background-color: $c-white;
+  	border: none;
+  	color: $c-theme-primary;
+  }
+  &--blue{
+  	background-color: $c-theme-secondary;
+  	border: none;
+  	color: $c-white;
+  }
+  &--cancel{
+    background-color: $c-red;
+    border: none;
+    color: $c-white;
+  }
+  &--link{
+    background-color: transparent;
+    border: none;
+    min-width: inherit;
+  }
+  &--dark-blue{
+    background-color: $c-theme-primary;
+    border: none;
+    color: $c-white;
+  }
+  &--border-blue{
+    border: .02rem solid $c-theme-secondary;
+    padding-bottom: .08rem;
+    padding-top: .08rem;
+  }
+  &--disabled{
+    opacity: .5;
+    pointer-events: none !important;
+    &:hover{
+      cursor: not-allowed;
+    }
+  }
+  @at-root button{
+    background-color: transparent;
+    &.button{
+      background-color: buttonface;
+    }
+  }
+  @include media('tablet') {
+    min-width: 1.5rem;
+    &--flexible{
+      min-width: inherit !important;
+    }
+  }
+}

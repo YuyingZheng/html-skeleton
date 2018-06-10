@@ -1,0 +1,503 @@
+/*============================================*/
+/*  Mixins*/
+/*============================================*/
+
+/* Media query breakpoints (Other choice: https://github.com/eduardoboucas/include-media)*/
+@mixin media($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+  @if $raw-query {
+    $query: if( type-of($raw-query)=="string",
+    unquote($raw-query),
+    inspect($raw-query));
+    @media #{$query} {
+      @content;
+    }
+  }
+  @else {
+    @warn "No value found for `#{$breakpoint}`. "+"Please make sure it is defined in `$breakpoints` map.";
+  }
+}
+
+/* Truncates text and adds an ellipsis to represent overflow.*/
+@mixin ellipsis($width: 100%, $display: block) {
+  display: $display;
+  max-width: $width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+@mixin multiline-ellipsis($line: 2, $line-height: 1.5) {
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  line-height: $line-height;
+  max-height: ($line * $line-height) * 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Form placeholder*/
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+  @include optional-at-root('::-ms-input-placeholder') {
+    @content;
+  }
+}
+
+/* Set CSS Plus*/
+@mixin setPlus($height: .02rem, $width: .1rem, $bgColor: $c-theme-primary){
+  position: relative;
+  &::before,
+  &::after{
+    background-color: $bgColor;
+    content: '';
+    display: block;
+    height: $height;
+    left: 50%;
+    margin-left: (-($width/2));
+    margin-top: (-($height/2));
+    position: absolute;
+    top: 50%;
+    width: $width;
+  }
+  &::after{
+    transform: rotate(90deg);
+  }
+}
+
+
+/* Set CSS Arrow*/
+@mixin setArrow($direction: left, $arrowsize: .12rem, $borderColor: $c-white, $borderWidth: .02rem){
+  border-color: $borderColor;
+  border-style: solid;
+  border-width: $borderWidth $borderWidth 0 0;
+  display: inline-block;
+  height: $arrowsize;
+  width: $arrowsize;
+  @if $direction==up {
+    transform: matrix(0.71,-0.71,0.71,0.71,0,0); /* rotate(-45deg)*/
+  }
+  @if $direction==right {
+    position: relative;
+    top: -2px;
+    transform: matrix(0.71,0.71,-0.71,0.71,0,0); /* rotate(45deg);*/
+  }
+  @if $direction==down {
+    position: relative;
+    top: -3px;
+    transform: matrix(-0.71,0.71,-0.71,-0.71,0,0); /* rotate(135deg);*/
+  }
+  @if $direction==left {
+    position: relative;
+    top: -2px;
+    transform: matrix(-0.71,-0.71,0.71,-0.71,0,0); /* rotate(-135deg);*/
+  }
+}
+
+/* Define triangle*/
+/*==============================================================================//*/
+/*1. $height(Define the height of the arrow itself, this does not include the border size.) */
+/*2. $border(Define the width of the border on top of the arrow.)  */
+/*3. $color(Define the color of the arrow itself.) */
+/*4. $border-color(Define color of the border.) */
+/*5. $direction(The direction you want the arrow to be relative to the parent element.) */
+/*6. $outside(By default the arrow is outside of the box and pointing away from its container.)*/
+/*==============================================================================//*/
+
+@mixin triangle($height: 10px, $border: 2px, $color: $c-white, $border-color: $c-black, $direction: bottom, $outside: true) {
+  $border-shift: $border;
+
+  position: relative;
+
+  &:after,
+  &:before {
+    border: solid transparent;
+    content: " ";
+    display: block;
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+
+    @if $direction==top {
+      @if $outside {
+        bottom: 100%;
+      }
+      @else {
+        margin-top: -$border-shift;
+        top: 0;
+      }
+    }
+    @if $direction==right {
+      @if $outside {
+        left: 100%;
+      }
+      @else {
+        margin-right: -$border-shift;
+        right: 0;
+      }
+    }
+    @if $direction==bottom {
+      @if $outside {
+        top: 100%;
+      }
+      @else {
+        bottom: 0;
+        margin-bottom: -$border-shift;
+      }
+    }
+    @if $direction==left {
+      @if $outside {
+        right: 100%;
+      }
+      @else {
+        left: 0;
+        margin-left: -$border-shift;
+      }
+    }
+  }
+
+  &:after {
+    border-color: rgba(255, 255, 255, 0);
+
+    border-width: $height;
+    @if $direction==top {
+      @if $outside {
+        border-bottom-color: $color;
+      }
+      @else {
+        border-top-color: $color;
+      }
+    }
+    @if $direction==right {
+      @if $outside {
+        border-left-color: $color;
+      }
+      @else {
+        border-right-color: $color;
+      }
+    }
+    @if $direction==bottom {
+      @if $outside {
+        border-top-color: $color;
+      }
+      @else {
+        border-bottom-color: $color;
+      }
+    }
+    @if $direction==left {
+      @if $outside {
+        border-right-color: $color;
+      }
+      @else {
+        border-left-color: $color;
+      }
+    }
+
+    @if $direction==top or $direction==bottom {
+      left: 50%;
+      margin-left: -$height;
+    }
+
+    @if $direction==left or $direction==right {
+      margin-top: -$height;
+      top: 50%;
+    }
+  }
+
+  &:before {
+    border-color: rgba(255, 255, 255, 0);
+
+    border-width: $height+$border;
+    @if $direction==top {
+      @if $outside {
+        border-bottom-color: $border-color;
+      }
+      @else {
+        border-top-color: $border-color;
+      }
+    }
+    @if $direction==right {
+      @if $outside {
+        border-left-color: $border-color;
+      }
+      @else {
+        border-right-color: $border-color;
+      }
+    }
+    @if $direction==bottom {
+      @if $outside {
+        border-top-color: $border-color;
+      }
+      @else {
+        border-bottom-color: $border-color;
+      }
+    }
+    @if $direction==left {
+      @if $outside {
+        border-right-color: $border-color;
+      }
+      @else {
+        border-left-color: $border-color;
+      }
+    }
+
+    @if $direction==top or $direction==bottom {
+      left: 50%;
+      margin-left: -($height + $border);
+    }
+
+    @if $direction==left or $direction==right {
+      margin-top: -($height + $border);
+      top: 50%;
+    }
+  }
+
+  @if $border>0px {
+    $border: round($border * 1.41421356);
+  }
+}
+
+
+//clearfix
+@mixin clearfix {
+  &::before,
+  &::after {
+    content: "";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+//float
+@mixin float-left {
+  float: left !important;
+}
+
+@mixin float-right {
+  float: right !important;
+}
+
+@mixin float-none {
+  float: none !important;
+}
+
+//placeholder
+
+//placeholder
+@mixin placeholder($color,$fontWeight:400) {
+  &:-moz-placeholder {
+    // Firefox 4-18
+    color: $color;
+    opacity: 1;
+    font-weight: $fontWeight;
+  }
+
+  &::-moz-placeholder {
+    // Firefox 19+
+    color: $color;
+    opacity: 1;
+    font-weight: $fontWeight;
+  }
+
+  &:-ms-input-placeholder {
+    // Internet Explorer 10+
+    color: $color;
+    font-weight: $fontWeight;
+  }
+
+  &::-webkit-input-placeholder {
+    // Safari and Chrome
+    color: $color;
+    font-weight: $fontWeight;
+  }
+}
+
+@mixin opacity($opacity) {
+  filter: alpha(opacity=$opacity-ie);
+  opacity: $opacity;
+  $opacity-ie: $opacity*100;
+}
+
+@mixin text-hide {
+  font: 0/0;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin border-top-radius($radius) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-right-radius($radius) {
+  border-top-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin border-bottom-radius($radius) {
+  border-bottom-right-radius: $radius;
+  border-bottom-left-radius: $radius;
+}
+
+@mixin border-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+  border-top-left-radius: $radius;
+}
+
+//list-rest
+@mixin list-unstyle {
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+//triangle arrow
+@mixin arrow_helper($direction, $align, $alignPosition, $narrowSize, $broadSize, $arrowColor) {
+  @if $direction=="top" {
+    border-width: 0 $broadSize $narrowSize;
+    border-bottom-color: $arrowColor;
+    top: -$narrowSize;
+  }
+
+  @if $direction=="bottom" {
+    border-width: $narrowSize $broadSize 0;
+    border-top-color: $arrowColor;
+    bottom: -$narrowSize;
+  }
+
+  @if $direction=="left" {
+    border-width: $broadSize $narrowSize $broadSize 0;
+    border-right-color: $arrowColor;
+    left: -$narrowSize;
+  }
+
+  @if $direction=="right" {
+    border-width: $broadSize 0 $broadSize $narrowSize;
+    border-left-color: $arrowColor;
+    right: -$narrowSize;
+  }
+
+  @if $direction=="bottom" or $direction=="top" {
+    @if $align=="center" {
+      right: 50%;
+      margin-right: -$broadSize;
+    }
+
+    @else if $align=="left" {
+      left: $alignPosition;
+    }
+
+    @else if $align=="right" {
+      right: $alignPosition;
+    }
+  }
+
+  @if $direction=="right" or $direction=="left" {
+    @if $align=="center" {
+      top: 50%;
+      margin-top: -$broadSize;
+    }
+
+    @else if $align=="top" {
+      top: $alignPosition;
+    }
+
+    @else if $align=="bottom" {
+      bottom: $alignPosition;
+    }
+  }
+}
+
+@mixin arrow($direction: "top", $align:"center", $alignPosition: 50%, $narrowSize: 20px, $broadSize:20px, $color: #f6f6f6, $borderColor: "none", $borderSize: 3px) {
+  $selector: "&:after, &:before";
+
+  @if $borderColor=="none" {
+    $selector: "&:after";
+  }
+
+  #{$selector} {
+    content: " ";
+    height: 0;
+    width: 0;
+    border: solid transparent;
+    position: absolute;
+    pointer-events: none;
+    visibility: visible;
+  }
+
+  &::after {
+    @include arrow_helper($direction, $align, $alignPosition, $narrowSize, $broadSize, $color);
+  }
+
+  @if $borderColor !="none" {
+    @if $alignPosition !=50% {
+      $alignPosition : $alignPosition - $borderSize;
+    }
+
+    &::before {
+      @include arrow_helper($direction, $align, $alignPosition, $narrowSize + $borderSize, $broadSize + $borderSize, $borderColor);
+    }
+  }
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
+
+@mixin media($breakname, $breakpoints: $breakpoints) {
+  $breakpoint: map-get($breakpoints, $breakname);
+
+  @if $breakpoint {
+    $point: if(
+      type-of($breakpoint) == "string",
+      unquote($breakpoint),
+      inspect($breakpoint)
+    );
+
+    @media #{$point} {
+      @content;
+    }
+  }
+}

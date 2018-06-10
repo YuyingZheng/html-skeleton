@@ -1,0 +1,48 @@
+{
+  "name": "html-skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuying-kooboo/html-skeleton.git"
+  },
+  "keywords": [
+    "html-skeleton"
+  ],
+  "author": "yuying",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuying-kooboo/html-skeleton/issues"
+  },
+  "homepage": "https://github.com/yuying-kooboo/html-skeleton#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "browser-sync": "^2.24.4",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-combine-mq": "^0.4.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-file-include": "^2.0.1",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.2.3",
+    "gulp-sass": "^4.0.1",
+    "gulp-sass-bulk-import": "^1.0.1",
+    "gulp-sequence": "^1.0.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-svgmin": "^1.2.4",
+    "gulp-svgstore": "^6.1.1",
+    "merge-stream": "^1.0.1",
+    "path": "^0.12.7",
+    "postcss-scss": "^1.0.5",
+    "postcss-sorting": "^3.1.0"
+  }
+}

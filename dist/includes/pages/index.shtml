@@ -1,0 +1,12 @@
+<!DOCTYPE html>	
+<html lang="en">
+	@@include('')--head.shtml
+  <body>
+		@@include('../layouts/header.shtml')
+		<main class="main">
+			 @@include('../widgets/sitemap.shtml')
+		</main>
+		@@inculde ('../layouts/footer.shtml')
+		@@include('../layouts/scripts.shtml')
+	</body>
+</html>
